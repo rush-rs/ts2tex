@@ -56,11 +56,11 @@ pub fn highlight<Renderer: renderer::Renderer>(
 
     if !raw_queries {
         settings.lang.highlights_query =
-            process_queries(settings.lang.inner, &settings.lang.highlights_query)?;
+            process_queries(settings.lang.inner.clone(), &settings.lang.highlights_query)?;
         settings.lang.injection_query =
-            process_queries(settings.lang.inner, &settings.lang.injection_query)?;
+            process_queries(settings.lang.inner.clone(), &settings.lang.injection_query)?;
         settings.lang.locals_query =
-            process_queries(settings.lang.inner, &settings.lang.locals_query)?;
+            process_queries(settings.lang.inner.clone(), &settings.lang.locals_query)?;
     }
 
     let mut highlighter = Highlighter::new();
@@ -69,6 +69,7 @@ pub fn highlight<Renderer: renderer::Renderer>(
         &settings.lang.highlights_query,
         &settings.lang.injection_query,
         &settings.lang.locals_query,
+        "",
     )?;
     highlight_config.configure(&settings.highlight_names);
 
@@ -93,7 +94,7 @@ pub fn highlight<Renderer: renderer::Renderer>(
 }
 
 fn process_queries(lang: tree_sitter::Language, source: &str) -> Result<String> {
-    let query = Query::new(lang, source)?;
+    let query = Query::new(&lang, source)?;
     let start_bytes: Vec<_> = (0..query.pattern_count())
         .map(|index| {
             (

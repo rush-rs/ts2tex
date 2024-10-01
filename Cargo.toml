@@ -2,4 +2,4 @@
 members = ["lirstings", "lirstings-cli", "tree-sitter-wasm-build-tool"]
 
 [patch.crates-io]
-tree-sitter-c2rust = { git = "https://github.com/shadaj/tree-sitter-c2rust" }
+tree-sitter-c2rust = { git = "https://github.com/shadaj/tree-sitter-c2rust", rev="7c645247cccd1549c2778eff77176b8af0a4ccf6" }
